@@ -1,0 +1,3 @@
+- We can use Redis for caching thanks to it's key-value
+- Also we can use Redis for rate-limits thanks to TTL structure
+- Also it's great for Leaderboards using ZADD 
