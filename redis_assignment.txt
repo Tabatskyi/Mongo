@@ -1,0 +1,53 @@
+# 1 String Operations
+SET product:1:name "WD Ultrastar 12TB SAS HDD"
+SET product:1:price 150
+SET product:1:category "Enterprise Storage"
+
+GET product:1:name
+GET product:1:price
+GET product:1:category
+
+# 2 Hash Operations
+HSET product:2 name "Intel Pro 10GbE" price 45 category "Networking" stock 8
+
+HGETALL product:2
+
+# 3 List Operations
+LPUSH recent_orders "order:101" "order:102" "order:103" "order:104" "order:105" "order:106" "order:107" "order:108" "order:109" "order:110"
+
+LRANGE recent_orders 0 -1
+
+LRANGE recent_orders 0 2
+
+# 4: Set Operations
+SADD product_tags "storage" "sas" "4kn" "networking" "10gbe" "pcie" "server" "btrfs"
+
+SADD product_tags "sas" # should return 0 elements
+
+SISMEMBER product_tags "btrfs"
+
+# 5 Expiration
+SET featured_product "product:2" EX 60
+
+TTL featured_product
+
+# wait ~60 seconds before running 
+# TTL featured_product
+# GET featured_product
+
+# 6 Cache Simulation
+SET cache:product:1001 '{"name":"HP H240","price":85,"stock":true}' EX 120
+
+GET cache:product:1001
+
+TTL cache:product:1001
+
+ZADD sales_leaderboard 150 "WD Ultrastar 12TB SAS HDD"
+ZADD sales_leaderboard 85 "HP H240"
+ZADD sales_leaderboard 320 "Intel Pro 10GbE"
+ZADD sales_leaderboard 45 "Intel X520-DA2"
+ZADD sales_leaderboard 210 "Intel Optane 900P NVMe"
+
+ZREVRANGE sales_leaderboard 0 -1 WITHSCORES
+
+ZREVRANGE sales_leaderboard 0 0 WITHSCORES
